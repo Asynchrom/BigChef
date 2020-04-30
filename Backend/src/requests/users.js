@@ -3,13 +3,25 @@ import connect from "../db"
 
 export default {
     async get(req, res) {
-        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
-        let db = await connect()
-        let cursor = await db.collection("users").find(req.body)
-        let result = await cursor.toArray()
-        cursor.close()
-        if (result.retrievedCount == 1) res.json(result[0])
-        else res.sendStatus(400)
+        console.log("q")
+        if (req.body.check) {
+            console.log("hello")
+            let db = await connect()
+            let cursor = await db.collection("users").find({ username: req.body.username })
+            let result = await cursor.toArray()
+            cursor.close()
+            if (result.retrievedCount == 1) return res.sendStatus(400)
+            else return res.sendStatus(200)
+        }
+        else {
+            if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
+            let db = await connect()
+            let cursor = await db.collection("users").find(req.body)
+            let result = await cursor.toArray()
+            cursor.close()
+            if (result.retrievedCount == 1) res.json(result[0])
+            else res.sendStatus(400)
+        }
     },
 
     async put(req, res) {

@@ -10,7 +10,7 @@ export default {
         cursor.close()
         result.foreach(element => {
             if (element.owner != req.body._id) {
-                delete element.owner
+                delete element.owner,
                 delete element._id
             }
         })

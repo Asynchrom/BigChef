@@ -1,19 +1,11 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <router-link class="navbar-brand text-white ml-3" to="/">Big Chief</router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <router-link class="navbar-brand text-white ml-3" to="/">BigChief</router-link>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse">
       <ul v-if="store.authenticated" class="navbar-nav ml-auto mr-5">
         <li class="nav-item">
           <a class="nav-link" href="#">Recipes</a>
@@ -25,16 +17,8 @@
           <a class="nav-link" href="#">Bookmarks</a>
         </li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >Profile</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Profile</a>
+          <div class="dropdown-menu">
             <a class="dropdown-item" href="#">Account</a>
             <a class="dropdown-item" href="#">My Recipes</a>
             <div class="dropdown-divider"></div>
@@ -44,10 +28,10 @@
       </ul>
       <ul v-else class="navbar-nav ml-auto mr-5">
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <router-link class="nav-link ml-3" to="/login">Login</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <router-link class="nav-link ml-3" to="/signup">Signup</router-link>
         </li>
       </ul>
     </div>
@@ -55,13 +39,13 @@
 </template>
 
 <script>
-import store from "../store"
+import store from "../store";
 
 export default {
   data() {
     return {
       store
-    }
+    };
   }
 };
 </script>
