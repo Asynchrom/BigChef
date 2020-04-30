@@ -3,10 +3,7 @@ import connect from "../db"
 
 export default {
     async get(req, res) {
-        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") {
-            res.sendStatus(400)
-            return
-        }
+        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
         let db = await connect()
         let cursor = await db.collection("users").find(req.body)
         let result = await cursor.toArray()
@@ -16,10 +13,7 @@ export default {
     },
 
     async put(req, res) {
-        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") {
-            res.sendStatus(400)
-            return
-        }
+        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
         let db = await connect()
         let cursor = await db.collection("users").find(req.body)
         let result = await cursor.toArray()

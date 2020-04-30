@@ -3,12 +3,13 @@ import connect from "../db"
 
 export default {
     async get(req, res) {
+        if (typeof (req.body._id) != "string") return res.sendStatus(400)
         let db = await connect()
         let cursor = await db.collection("comments").find({ dish: req.body._id })
         let result = await cursor.toArray()
         cursor.close()
         result.foreach(element => {
-            if (element.owner != req.body.id) {
+            if (element.owner != req.body._id) {
                 delete element.owner
                 delete element._id
             }
