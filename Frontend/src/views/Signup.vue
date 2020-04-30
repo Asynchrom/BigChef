@@ -46,7 +46,7 @@ export default {
     async signup() {
       try {
         if(this.store.credentials.password != this.password) {
-          return this.error = "Password doesn't match!"
+          return this.error = "Passwords doesn't match!"
         }
         this.disable = true
         await Users.signup()

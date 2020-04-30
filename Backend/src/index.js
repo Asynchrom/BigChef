@@ -22,12 +22,11 @@ app.put('/dishes', dishes.put)
 app.post('/dishes', dishes.post)
 app.patch('/dishes', dishes.patch)
 
-app.get('/notes', notes.get)
+app.post('/notes/get', notes.get)
 app.put('/notes', notes.put)
 app.post('/notes', notes.post)
 app.patch('/notes', notes.patch)
 
-//app.get('/users/:usr', users.get)
 app.put('/users', users.put)
 app.post('/users', users.post)
 app.patch('/users', users.patch)

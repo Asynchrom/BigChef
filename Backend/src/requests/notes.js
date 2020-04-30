@@ -17,10 +17,16 @@ export default {
     },
 
     async put(req, res) {
-        let db = await connect()
-        let result = await db.collection("notes").insertOne(req.body)
-        if (result.insertedCount == 1) res.json(result.insertedId)
-        else res.sendStatus(400)
+        try{
+            req.body.owner = mongo.ObjectId(req.body.owner)
+            let db = await connect()
+            let result = await db.collection("notes").insertOne(req.body)
+            if (result.insertedCount == 1) res.json(result.insertedId)
+            else res.sendStatus(400)
+        }
+        catch{
+            res.sendStatus(400)
+        }
     },
 
     async post(req, res) {
@@ -37,14 +43,16 @@ export default {
 
     async patch(req, res) {
         try {
-            let data = req.body
-            delete data._id
+            console.log(req.body)
+            let _id = req.body._id
+            delete req.body._id
+            delete req.body.owner
             let db = await connect()
-            let result = await db.collection("notes").updateOne({ _id: mongo.ObjectId(req.body_id) }, { $set: data })
+            let result = await db.collection("notes").updateOne({ _id: mongo.ObjectId(_id) }, { $set: req.body })
             if (result.modifiedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
         }
-        catch{
+        catch(error){
             res.sendStatus(400)
         }
     }

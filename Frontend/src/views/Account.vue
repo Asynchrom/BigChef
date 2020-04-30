@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label>New password</label>
-        <input v-bind:disabled="disable" v-model="passwordCheck" v-on:keydown.enter="change()" type="password" class="form-control" />
+        <input v-bind:disabled="disable" v-model="password" v-on:keydown.enter="change()" type="password" class="form-control" />
       </div>
       <div class="form-group">
         <label>Confirm password</label>
@@ -41,7 +41,7 @@ export default {
   methods: {
     async change() {
       try {
-        if(this.password != this.passwordCheck) {
+        if (this.password != this.passwordCheck) {
           this.changed = false
           return this.error = "Password doesn't match!"
         }
@@ -51,8 +51,8 @@ export default {
         this.error = ""
         this.disable = false
         this.changed = true
-      } catch {
-          if(error.toString().includes('460')) this.error = "Password too short!"
+      } catch(error) {
+          if (error.toString().includes('460')) this.error = "Passwords too short!"
           else this.error = "Something went wrong!"
           this.disable = false
           this.changed = false

@@ -22,7 +22,7 @@ export default {
         store.authenticated = true
     },
     async change() {
-        await Service.post("/users", store.credentials)
+        await Service.patch("/users", store.credentials)
         sessionStorage.setItem('password', store.credentials.password)
     },
 }
