@@ -27,7 +27,7 @@ app.put('/notes', notes.put)
 app.post('/notes', notes.post)
 app.patch('/notes', notes.patch)
 
-app.get('/users', users.get)
+//app.get('/users/:usr', users.get)
 app.put('/users', users.put)
 app.post('/users', users.post)
 app.patch('/users', users.patch)

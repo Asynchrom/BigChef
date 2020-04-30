@@ -1,20 +1,19 @@
 <template>
   <div class="row" style="min-height:70vh">
     <div class="mx-auto align-self-center text-center" style="max-width:300px">
-      <h1>Signup</h1>
-      <hr />
+      <h1>Signup</h1><hr />
       <span v-if="error" class="text-danger">{{ error }}<hr /></span>
       <div class="form-group">
         <label>Username</label>
-        <input v-bind:disabled="disable" v-model="store.credentials.username" v-on:keydown.enter="singUp()" type="username" class="form-control" />
+        <input v-bind:disabled="disable" v-model="store.credentials.username" v-on:keydown.enter="signup()" type="username" class="form-control" />
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input v-bind:disabled="disable" v-model="store.credentials.password" v-on:keydown.enter="singUp()" type="password" class="form-control" />
+        <input v-bind:disabled="disable" v-model="store.credentials.password" v-on:keydown.enter="signup()" type="password" class="form-control" />
       </div>
       <div class="form-group">
         <label>Confirm password</label>
-        <input v-bind:disabled="disable" v-model="password" v-on:keydown.enter="singUp()" type="password" class="form-control" />
+        <input v-bind:disabled="disable" v-model="password" v-on:keydown.enter="signup()" type="password" class="form-control" />
       </div>
       <div class="form-check-inline">
         <input v-model="store.credentials.gender" class="form-check-input" type="radio" value="Male" id="male" />
@@ -24,7 +23,7 @@
         <input v-model="store.credentials.gender" class="form-check-input" type="radio" value="Female" id="female" />
         <label class="form-check-label" for="female">Female</label>
       </div>
-      <button v-bind:disabled="disable" v-on:click="singUp()" class="btn btn-primary mx-auto d-block mt-4">Submit</button>
+      <button v-bind:disabled="disable" v-on:click="signup()" class="btn btn-primary mx-auto d-block mt-4">Submit</button>
     </div>
   </div>
 </template>
@@ -44,22 +43,23 @@ export default {
   },
 
   methods: {
-    async singUp() {
+    async signup() {
       try {
-        this.disable = true
         if(this.store.credentials.password != this.password) {
-          this.disable = false
-          return this.error = "Password doesn't match"
+          return this.error = "Password doesn't match!"
         }
-        await Users.checkAvailability()
-        console.log("hello")
-        this.disable = false;
-      } catch (error) {
-        this.error = error;
-        this.disable = false;
+        this.disable = true
+        await Users.signup()
+        this.$router.replace({ name: "Home" })
+      } catch(error) {
+        if(error.toString().includes('409')) this.error = "Username taken!"
+        else if(error.toString().includes('460')) this.error = "Password too short!"
+        else if(error.toString().includes('461')) this.error = "Username too short!"
+        else this.error = "Something went wrong!"
+        this.disable = false
       }
-    },
+    }
   }
-};
+}
 </script>
 

@@ -1,11 +1,28 @@
-import Service from "../service"
+import { Service } from "../service"
 import store from "../../store"
 
-let cards = new Array
-
 export default {
-    async checkAvailability() {
-        store.credentials.check = true
-        await Service.get("/users", store.credentials)
+    async signup() {
+        let response = await Service.put("/users", store.credentials)
+        store.credentials._id = await response.data
+        sessionStorage.setItem('_id', store.credentials._id)
+        sessionStorage.setItem('username', store.credentials.username)
+        sessionStorage.setItem('password', store.credentials.password)
+        sessionStorage.setItem('gender', store.credentials.gender)
+        store.authenticated = true
+    },
+
+    async login() {
+        let response = await Service.post("/users", store.credentials)
+        store.credentials = await response.data
+        sessionStorage.setItem('_id', store.credentials._id)
+        sessionStorage.setItem('username', store.credentials.username)
+        sessionStorage.setItem('password', store.credentials.password)
+        sessionStorage.setItem('gender', store.credentials.gender)
+        store.authenticated = true
+    },
+    async change() {
+        await Service.post("/users", store.credentials)
+        sessionStorage.setItem('password', store.credentials.password)
     },
 }

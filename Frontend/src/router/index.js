@@ -1,33 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import store from '../store'
+import { routes } from './routes'
 
 Vue.use(VueRouter)
-
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/notes',
-    name: 'Notes',
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "notes" */ '../views/Notes.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
-  },
-  {
-    path: '/signup',
-    name: 'Signup',
-    component: () => import(/* webpackChunkName: "signup" */ '../views/Signup.vue')
-  }
-]
 
 const router = new VueRouter({
   mode: 'history',
@@ -36,8 +12,17 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (!store.authenticated) {
+      store.credentials._id = sessionStorage.getItem('_id')
+      if(store.credentials._id) {
+        store.credentials.username = sessionStorage.getItem('username')
+        store.credentials.password = sessionStorage.getItem('password')
+        store.credentials.gender = sessionStorage.getItem('gender')
+        store.authenticated = true
+      }
+  }
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.isAuthenticated) {
+    if (!store.authenticated) {
       next({ name: 'Login' })
     }
     else {

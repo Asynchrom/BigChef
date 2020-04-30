@@ -2,48 +2,31 @@ import mongo from "mongodb"
 import connect from "../db"
 
 export default {
-    async get(req, res) {
-        console.log("q")
-        if (req.body.check) {
-            console.log("hello")
+    async put(req, res) {
+        try {
+            if (req.body.password.length < 6) return res.sendStatus(460)
+            if (req.body.username.length < 6) return res.sendStatus(461)
             let db = await connect()
             let cursor = await db.collection("users").find({ username: req.body.username })
             let result = await cursor.toArray()
             cursor.close()
-            if (result.retrievedCount == 1) return res.sendStatus(400)
-            else return res.sendStatus(200)
-        }
-        else {
-            if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
-            let db = await connect()
-            let cursor = await db.collection("users").find(req.body)
-            let result = await cursor.toArray()
-            cursor.close()
-            if (result.retrievedCount == 1) res.json(result[0])
+            if (result.length > 0) return res.sendStatus(409)
+            delete req.body._id
+            result = await db.collection("users").insertOne(req.body)
+            if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
         }
-    },
-
-    async put(req, res) {
-        if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
-        let db = await connect()
-        let cursor = await db.collection("users").find(req.body)
-        let result = await cursor.toArray()
-        cursor.close()
-        if (result.retrievedCount == 1) {
+        catch {
             res.sendStatus(400)
-            return
         }
-        result = await db.collection("users").insertOne(req.body)
-        if (result.insertedCount == 1) res.json(result.insertedId)
-        else res.sendStatus(400)
     },
 
     async post(req, res) {
         try {
+            if (typeof (req.body.username) != "string" || typeof (req.body.password) != "string") return res.sendStatus(400)
             let db = await connect()
-            let result = await db.collection("users").deleteOne({ _id: mongo.ObjectId(req.body._id) })
-            if (result.deletedCount == 1) res.sendStatus(200)
+            let result = await db.collection("users").findOne({username: req.body.username, password: req.body.password})
+            if (result != null) res.json(result)
             else res.sendStatus(400)
         }
         catch {
@@ -53,10 +36,9 @@ export default {
 
     async patch(req, res) {
         try {
-            let data = req.body
-            delete data._id
+            if (req.body.password.length < 6) return res.sendStatus(460)
             let db = await connect()
-            let result = await db.collection("dishes").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: data })
+            let result = await db.collection("users").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: {password: req.body.password} })
             if (result.modifiedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
         }

@@ -2,76 +2,48 @@
   <div class="row" style="min-height:70vh">
     <div class="mx-auto align-self-center text-center" style="max-width:300px">
       <h1>Login</h1><hr />
-      <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Username</label>
-          <input
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" />
-        </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary mx-auto d-block">Submit</button>
-      </form>
+      <span v-if="error" class="text-danger">{{ error }}<hr /></span>
+      <div class="form-group">
+        <label>Username</label>
+        <input v-bind:disabled="disable" v-model="store.credentials.username" v-on:keydown.enter="login()" type="username" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input v-bind:disabled="disable" v-model="store.credentials.password" v-on:keydown.enter="login()" type="password" class="form-control" />
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button v-bind:disabled="disable" v-on:click="login()" class="btn btn-primary mx-auto d-block">Submit</button>
     </div>
   </div>
 </template>
 
 <script>
-import { Users } from "../services"
+import { Users } from "../services";
+import store from "../store";
 
 export default {
   data() {
     return {
+      store,
       disable: false,
-      clicked: false,
-      cards: new Array(),
-      card: {
-        header: "Header",
-        title: "Card title",
-        text: "When you are done editing this card, press enter to save..."
-      }
+      error: ""
     };
   },
 
-  async mounted() {
-    try {
-      this.cards = await _cards.Get();
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
   methods: {
-    async saveCard() {
+    async login() {
       try {
-        this.disable = true;
-        await _cards.Set(this.card);
-        this.disable = false;
-        this.closeCard();
-      } catch (error) {
-        console.log(error);
+        this.disable = true
+        await Users.login();
+        this.$router.replace({ name: "Home" });
+      } catch {
+        this.error = "Wrong credentials!";
         this.disable = false;
       }
-    },
-
-    closeCard() {
-      this.clicked = false;
-      this.card = new Object();
-      this.card.header = "Header";
-      this.card.title = "Card title";
-      this.card.text =
-        "When you are done editing this card, press enter to save...";
     }
   }
-}
+};
 </script>
