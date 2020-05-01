@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul v-if="store.authenticated" class="navbar-nav ml-auto mr-5">
         <li class="nav-item">
-          <a class="nav-link" href="#">Recipes</a>
+          <router-link class="nav-link" to="/recipes/">Recipes</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/notes/">Notes</router-link>

@@ -1,40 +1,34 @@
 <template>
-  <div class="card-group">
-    <div class="card">
-      <img src="..." class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p
-          class="card-text"
-        >This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+  <div class="row" style="min-height:90vh">
+      <div v-if="loading" class="spinner-border text-primary mx-auto" role="status" style="width: 100px; height: 100px; margin-top: 35vh">
+        <span class="sr-only">Loading...</span>
       </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="..." class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p
-          class="card-text"
-        >This card has supporting text below as a natural lead-in to additional content.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-    <div class="card">
-      <img src="..." class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p
-          class="card-text"
-        >This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
+      <RecipeCard v-else v-for="recipe in recipes" v-bind:key="recipe._id" v-bind:recipe="recipe"/>
   </div>
 </template>
+
+<script>
+import RecipeCard from "../components/RecipeCard.vue"
+import { Dishes } from "../services"
+
+export default {
+  components: { RecipeCard },
+
+  data() {
+    return {
+      loading: true,
+      recipes: new Array(),
+      error: ""
+    }
+  },
+
+  async mounted() {
+    try {
+      this.recipes = await Dishes.getAll()
+      this.loading = false
+    } catch(error) {
+      this.error = error
+    }
+  },
+}
+</script>

@@ -31,19 +31,5 @@ export default {
       this.error = error
     }
   },
-
-  methods: {
-    // async delete() { //todo
-    //   try {
-    //     this.disable = true
-    //     await Notes.set(this.card)
-    //     this.closeCard()
-    //     this.disable = false
-    //   } catch (error) {
-    //     this.error = error
-    //     this.disable = false
-    //   }
-    // },
-  }
 }
 </script>

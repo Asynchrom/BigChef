@@ -4,17 +4,10 @@ import connect from "../db"
 export default {
     async getAll(req, res) {
         try {
-            if (typeof (req.body._id) != "string") return res.sendStatus(400)
             let db = await connect()
-            let cursor = await db.collection("comments").find({ dish: req.body._id })
+            let cursor = await db.collection("dishes").find().project({ owner: 0 })
             let result = await cursor.toArray()
             cursor.close()
-            result.foreach(element => {
-                if (element.owner != req.body._id) {
-                    delete element.owner,
-                    delete element._id
-                }
-            })
             if (result.length > 0) res.json(result)
             else res.sendStatus(400)
         }

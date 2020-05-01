@@ -5,6 +5,12 @@ let recipes = new Array
 let refresh = true
 
 export default {
+    async getAll() {
+        let response = await Service.get("/dishes")
+        let allRecipes = await response.data
+        return allRecipes
+    },
+
     async get() {
         if (refresh) {
             let response = await Service.post("/dishes/get", {_id: store.credentials._id})
