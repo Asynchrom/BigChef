@@ -2,10 +2,11 @@ import { Service } from "../service"
 import store from "../../store"
 
 let cards = new Array
+let refresh = true
 
 export default {
     async get() {
-        if (cards.length == 0) {
+        if (refresh) {
             let response = await Service.post("/notes/get", {_id: store.credentials._id})
             cards = await response.data
         }
@@ -16,11 +17,12 @@ export default {
         card.owner = store.credentials._id
         let response = await Service.put("/notes", card)
         card._id = response.data
+        if(cards.length == 0) location.reload()
         cards.push(card)
     },
 
     async pop(_id) {
-        await Service.post("/notes", { _id })
+        await Service.post("/notes", { _id : _id })
         let i = 0
         cards.forEach(e => {
             if (_id == e._id) {

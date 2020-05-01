@@ -23,7 +23,7 @@ export default {
     },
 
     async delete(_id) {
-        await Service.post("/dishes", { _id })
+        await Service.patch("/dishes", { _id: _id, owner: store.credentials._id })
         let i = 0
         recipes.forEach(e => {
             if (_id == e._id) {
