@@ -33,10 +33,8 @@ export default {
     async deleteCard() {
       try {
         this.disable = true
-        await Notes.Pop(this.card._id)
-        this.disable = false
+        await Notes.pop(this.card._id)
       } catch (error) {
-        console.log(error)
         this.error = error
         this.disable = false
       }
@@ -45,10 +43,9 @@ export default {
     async updateCard() {
       try {
         this.disable = true
-        await Notes.Update(this.card)
+        await Notes.update(this.card)
         this.disable = false
       } catch (error) {
-        console.log(error)
         this.error = error
         this.disable = false
       }

@@ -17,10 +17,10 @@ app.put('/comments', comments.put)
 app.post('/comments', comments.post)
 app.patch('/comments', comments.patch)
 
-app.get('/dishes', dishes.get)
+app.post('/dishes/get', dishes.get)
 app.put('/dishes', dishes.put)
 app.post('/dishes', dishes.post)
-app.patch('/dishes', dishes.patch)
+app.get('/dishes', dishes.getAll)
 
 app.post('/notes/get', notes.get)
 app.put('/notes', notes.put)

@@ -37,18 +37,17 @@ export default {
       cards: new Array(),
       error: "",
       card: {
-        header: "Header",
-        title: "Card title",
-        text: "When you are done editing the card, press enter to save..."
+        header: "Food",
+        title: "Note title",
+        text: "When you are done editing the note, press enter to save..."
       }
     }
   },
 
   async mounted() {
     try {
-      this.cards = await Notes.Get()
+      this.cards = await Notes.get()
     } catch(error) {
-      console.log(error)
       this.error = error
     }
   },
@@ -57,11 +56,10 @@ export default {
     async saveCard() {
       try {
         this.disable = true
-        await Notes.Set(this.card)
+        await Notes.set(this.card)
         this.closeCard()
         this.disable = false
       } catch (error) {
-        console.log(error)
         this.error = error
         this.disable = false
       }
@@ -70,9 +68,9 @@ export default {
     closeCard() {
       this.clicked = false
       this.card = new Object()
-      this.card.header = "Header"
-      this.card.title = "Card title"
-      this.card.text = "When you are done editing the card, press enter to save..."
+      this.card.header = "Food"
+      this.card.title = "Note title"
+      this.card.text = "When you are done editing the note, press enter to save..."
     }
   }
 }

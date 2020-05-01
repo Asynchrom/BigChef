@@ -11,7 +11,7 @@ export default {
             if (result.length > 0) res.json(result)
             else res.sendStatus(400)
         }
-        catch{
+        catch {
             res.sendStatus(400)
         }
     },
@@ -24,7 +24,7 @@ export default {
             if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
         }
-        catch{
+        catch {
             res.sendStatus(400)
         }
     },
@@ -36,7 +36,7 @@ export default {
             if (result.deletedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
         }
-        catch{
+        catch {
             res.sendStatus(400)
         }
     },
@@ -52,7 +52,7 @@ export default {
             if (result.modifiedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
         }
-        catch(error){
+        catch {
             res.sendStatus(400)
         }
     }
