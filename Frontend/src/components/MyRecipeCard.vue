@@ -1,6 +1,8 @@
 <template>
-  <router-link class="list-group-item list-group-item-action" to="/myrecipes/new/">{{recipe.name}} ({{recipe.type}})
-    <button v-if="!disable" v-on:click="deleteRecipe($event)"  title="Delete" class="btn btn-danger float-right p-0 text-white" style="width: 30px;"><i class="fas fa-trash"></i></button>
+  <router-link v-bind:to="{ name: 'Dish', params: {name: recipe.name, recipe: recipe}}" 
+    class="list-group-item list-group-item-action">{{recipe.name}} ({{recipe.type}})
+    <button v-if="!disable" v-on:click="deleteRecipe($event)"  title="Delete" 
+    class="btn btn-danger float-right p-0 text-white" style="width: 30px;"><i class="fas fa-trash"></i></button>
     <div v-if="disable" class="spinner-border spinner-border-sm float-right mt-1 mr-1" role="status"></div>
   </router-link>
 </template>

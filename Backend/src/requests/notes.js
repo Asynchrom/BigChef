@@ -5,7 +5,7 @@ export default {
     async get(req, res) {
         try {
             let db = await connect()
-            let cursor = await db.collection("notes").find({ owner: mongo.ObjectId(req.body._id) })
+            let cursor = await db.collection("notes").find({ owner: mongo.ObjectId(req.body._id) }).sort({date: -1})
             let result = await cursor.toArray()
             cursor.close()
             if (result.length > 0) res.json(result)
@@ -19,6 +19,7 @@ export default {
     async put(req, res) {
         try{
             req.body.owner = mongo.ObjectId(req.body.owner)
+            req.body.date = new Date
             let db = await connect()
             let result = await db.collection("notes").insertOne(req.body)
             if (result.insertedCount == 1) res.json(result.insertedId)

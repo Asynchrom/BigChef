@@ -8,16 +8,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul v-if="store.authenticated" class="navbar-nav ml-auto mr-5">
         <li class="nav-item">
-          <router-link class="nav-link" to="/recipes/">Recipes</router-link>
+          <router-link class="nav-link text-light" to="/recipes/">Recipes</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/notes/">Notes</router-link>
+          <router-link class="nav-link text-light" to="/notes/">Notes</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Bookmarks</a>
+          <a class="nav-link text-light" href="#">Bookmarks</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">Profile</a>
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" data-toggle="dropdown">Profile</a>
           <div class="dropdown-menu">
             <a class="dropdown-item">{{store.credentials.username}}</a>
             <div class="dropdown-divider"></div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <router-link v-bind:to="{ name: 'Dish', params: {name: recipe.name, recipe: recipe}}" class="text-dark">
     <div class="card float-left m-2" style="max-width: 300px">
       <img v-bind:src="recipe.img" class="card-img-top" style="height: 250px" />
       <div class="card-body">
@@ -10,7 +10,7 @@
         <small class="text-muted">By {{recipe.by}}</small>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>

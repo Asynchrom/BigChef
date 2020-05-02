@@ -18,7 +18,7 @@ export default {
         let response = await Service.put("/notes", card)
         card._id = response.data
         if(cards.length == 0) location.reload()
-        cards.push(card)
+        cards.unshift(card)
     },
 
     async pop(_id) {

@@ -3,6 +3,7 @@ export default {
     credentials: {
         username: new String,
         password: new String,
+        bookmarks: new Array,
         gender: "Male"
     }
 }

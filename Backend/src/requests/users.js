@@ -12,6 +12,7 @@ export default {
             cursor.close()
             if (result.length > 0) return res.sendStatus(409)
             delete req.body._id
+            req.body.bookmarks = new Array
             result = await db.collection("users").insertOne(req.body)
             if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
@@ -39,6 +40,18 @@ export default {
             if (req.body.password.length < 6) return res.sendStatus(460)
             let db = await connect()
             let result = await db.collection("users").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: {password: req.body.password} })
+            if (result.modifiedCount == 1) res.sendStatus(200)
+            else res.sendStatus(400)
+        }
+        catch {
+            res.sendStatus(400)
+        }
+    },
+
+    async patchBkm(req, res) {
+        try {
+            let db = await connect()
+            let result = await db.collection("users").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: {bookmarks: req.body.bookmarks} })
             if (result.modifiedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
         }

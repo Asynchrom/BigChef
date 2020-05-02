@@ -3,7 +3,9 @@
       <div v-if="loading" class="spinner-border text-primary mx-auto" role="status" style="width: 100px; height: 100px; margin-top: 35vh">
         <span class="sr-only">Loading...</span>
       </div>
-      <RecipeCard v-else v-for="recipe in recipes" v-bind:key="recipe._id" v-bind:recipe="recipe"/>
+      <div  v-else class="container-fluid">
+        <RecipeCard v-for="recipe in recipes" v-bind:key="recipe._id" v-bind:recipe="recipe"/>
+      </div>
   </div>
 </template>
 

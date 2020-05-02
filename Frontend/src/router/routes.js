@@ -20,6 +20,17 @@ const routes = [
       component: () => import(/* webpackChunkName: "recipes" */ '../views/Recipes.vue')
     },
     {
+      path: '/recipes/:name',
+      name: 'Dish',
+      props: true,
+      meta: { requiresAuth: true },
+      component: () => import(/* webpackChunkName: "dish" */ '../views/Dish.vue'),
+      beforeEnter: (to, from, next) => {
+        if (from.name != "Recipes" && from.name != "MyRecipes") next({ name: "Recipes" });
+        else next()
+      }
+    },
+    {
       path: '/myrecipes',
       name: 'MyRecipes',
       meta: { requiresAuth: true },
