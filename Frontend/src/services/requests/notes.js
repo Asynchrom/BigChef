@@ -9,6 +9,7 @@ export default {
         if (refresh) {
             let response = await Service.post("/notes/get", {_id: store.credentials._id})
             cards = await response.data
+            refresh = false
         }
         return cards
     },

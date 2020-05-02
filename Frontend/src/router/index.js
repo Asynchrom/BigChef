@@ -19,7 +19,6 @@ router.beforeEach((to, from, next) => {
         store.credentials.password = sessionStorage.getItem('password')
         store.credentials.gender = sessionStorage.getItem('gender')
         store.credentials.bookmarks = JSON.parse(sessionStorage.getItem('bookmarks'))
-        console.log(store.credentials.bookmarks)
         store.authenticated = true
       }
   }

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { Users } from "../services"
+import { Bookmarks } from "../services"
 import store from "../store"
 
 export default {
@@ -70,11 +70,12 @@ export default {
       async bookmark() {
         try {
           this.disabled = true
-          if (this.bookmarked) await Users.bookmark(this.recipe._id, true)
-          else await Users.bookmark(this.recipe._id, false)
+          if (this.bookmarked) await Bookmarks.bookmarkPop(this.recipe)
+          else await Bookmarks.bookmarkSet(this.recipe)
           this.bookmarked = !this.bookmarked
           this.disabled = false
         } catch (error) {
+          console.log(error)
           this.error = error
           this.disabled = false
         }

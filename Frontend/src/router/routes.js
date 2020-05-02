@@ -26,9 +26,15 @@ const routes = [
       meta: { requiresAuth: true },
       component: () => import(/* webpackChunkName: "dish" */ '../views/Dish.vue'),
       beforeEnter: (to, from, next) => {
-        if (from.name != "Recipes" && from.name != "MyRecipes") next({ name: "Recipes" });
+        if (from.name != "Recipes" && from.name != "MyRecipes" && from.name != "Bookmarks") next({ name: "Recipes" });
         else next()
       }
+    },
+    {
+      path: '/bookmarks',
+      name: 'Bookmarks',
+      meta: { requiresAuth: true },
+      component: () => import(/* webpackChunkName: "bookmarks" */ '../views/Bookmarks.vue')
     },
     {
       path: '/myrecipes',

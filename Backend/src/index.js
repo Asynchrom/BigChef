@@ -18,6 +18,7 @@ app.post('/comments', comments.post)
 app.patch('/comments', comments.patch)
 
 app.post('/dishes/get', dishes.get)
+app.post('/dishes/bkm', dishes.getBkm)
 app.put('/dishes', dishes.put)
 app.patch('/dishes', dishes.patch)
 app.get('/dishes', dishes.getAll)

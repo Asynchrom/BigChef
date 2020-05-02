@@ -14,7 +14,7 @@
           <router-link class="nav-link text-light" to="/notes/">Notes</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">Bookmarks</a>
+          <router-link class="nav-link text-light" to="/bookmarks/">Bookmarks</router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" data-toggle="dropdown">Profile</a>

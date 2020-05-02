@@ -27,29 +27,5 @@ export default {
     async change() {
         await Service.patch("/users", store.credentials)
         sessionStorage.setItem('password', store.credentials.password)
-    },
-
-    async bookmark(_id, remove) {
-        let tmp = store.credentials.bookmarks
-        if (remove) {
-            let i = 0
-            tmp.forEach(e => {
-                if (_id == e) {
-                    tmp.splice(i, 1)
-                    return
-                }
-                i++
-            })
-            console.log('1', tmp)
-        }
-        else {
-            if (store.credentials.bookmarks.includes(_id)) {
-                return
-            }
-            else tmp.push(_id)
-        }
-        await Service.patch("/users/bkm", {_id: store.credentials._id, bookmarks: tmp })
-        store.credentials.bookmarks = tmp
-        sessionStorage.setItem('bookmarks', JSON.stringify(tmp))
     }
 }
