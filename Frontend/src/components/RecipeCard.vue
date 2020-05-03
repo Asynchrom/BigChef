@@ -30,7 +30,7 @@ export default {
     },
 
     mounted() {
-      this.description = this.recipe.description.slice(0,100) + ".."
+      this.description = this.recipe.description.slice(0,100) + "..."
     }
 }
 </script>
