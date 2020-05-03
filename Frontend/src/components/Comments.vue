@@ -55,6 +55,7 @@ export default {
 
     async mounted() {
         try {
+            if (this.recipe.by == store.credentials.username) this.contains = true
             this.comments = await Comments.get(this.recipe)
             this.comments.forEach(e => {
                 if(e.by == store.credentials.username){
@@ -64,7 +65,6 @@ export default {
             })
             this.loading = false
         } catch (error) {
-            console.log(error)
             this.loading = false
             this.error = error
         }
@@ -78,7 +78,6 @@ export default {
             this.comments.unshift(response)
             this.contains = true
         } catch (error) {
-            console.log(error)
             this.disabled = false
             this.error = error
         }

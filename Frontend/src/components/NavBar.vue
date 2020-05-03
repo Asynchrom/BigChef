@@ -30,10 +30,10 @@
       </ul>
       <ul v-else class="navbar-nav ml-auto mr-5">
         <li class="nav-item">
-          <router-link class="nav-link ml-3" to="/login/">Login</router-link>
+          <router-link class="nav-link ml-3 text-light" to="/login/">Login</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link ml-3" to="/signup/">Signup</router-link>
+          <router-link class="nav-link ml-3 text-light" to="/signup/">Signup</router-link>
         </li>
       </ul>
     </div>

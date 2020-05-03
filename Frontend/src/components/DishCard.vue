@@ -36,7 +36,7 @@
     <div class="float-left m-2">
         <div class="card-body">
             <h5 class="card-title">Description</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{recipe.description}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted" style="white-space: pre-wrap;">{{recipe.description}}</h6>
         </div>
     </div>
   </div>

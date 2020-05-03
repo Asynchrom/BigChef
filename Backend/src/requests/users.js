@@ -5,7 +5,7 @@ export default {
     async put(req, res) {
         try {
             if (req.body.password.length < 6) return res.sendStatus(460)
-            if (req.body.username.length < 6) return res.sendStatus(461)
+            if (req.body.username.length < 4) return res.sendStatus(461)
             let db = await connect()
             let cursor = await db.collection("users").find({ username: req.body.username })
             let result = await cursor.toArray()
