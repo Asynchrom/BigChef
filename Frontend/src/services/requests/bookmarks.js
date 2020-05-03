@@ -40,7 +40,6 @@ export default {
         store.credentials.bookmarks = tmp
         i = 0
         bookmarks.forEach(e => {
-            console.log(i)
             if (_id == e._id) {
                 bookmarks.splice(i, 1)
                 return

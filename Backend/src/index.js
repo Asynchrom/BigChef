@@ -12,10 +12,8 @@ app.use(cors())
 app.use(express.json())
 app.listen(port)
 
-app.get('/comments', comments.get)
+app.get('/comments/:id', comments.get)
 app.put('/comments', comments.put)
-app.post('/comments', comments.post)
-app.patch('/comments', comments.patch)
 
 app.post('/dishes/get', dishes.get)
 app.post('/dishes/bkm', dishes.getBkm)

@@ -75,7 +75,6 @@ export default {
           this.bookmarked = !this.bookmarked
           this.disabled = false
         } catch (error) {
-          console.log(error)
           this.error = error
           this.disabled = false
         }

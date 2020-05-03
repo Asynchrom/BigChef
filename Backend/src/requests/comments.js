@@ -3,47 +3,35 @@ import connect from "../db"
 
 export default {
     async get(req, res) {
-        if (typeof (req.body._id) != "string") return res.sendStatus(400)
-        let db = await connect()
-        let cursor = await db.collection("comments").find({ dish: req.body._id })
-        let result = await cursor.toArray()
-        cursor.close()
-        result.foreach(element => {
-            if (element.owner != req.body._id) {
-                delete element.owner,
-                delete element._id
-            }
-        })
-        if (result.length > 0) res.json(result)
-        else res.sendStatus(400)
-    },
-
-    async put(req, res) {
-        let db = await connect()
-        let result = await db.collection("comments").insertOne(req.body)
-        if (result.insertedCount == 1) res.json(result.insertedId)
-        else res.sendStatus(400)
-    },
-
-    async post(req, res) {
-        try {
+        try{
             let db = await connect()
-            let result = await db.collection("comments").deleteOne({ _id: mongo.ObjectId(req.body._id) })
-            if (result.deletedCount == 1) res.sendStatus(200)
+            let cursor = await db.collection("comments").find({ recipe: mongo.ObjectId(req.params.id) }).project({ owner: 0 }).sort({date: -1})
+            let result = await cursor.toArray()
+            cursor.close()
+            if (result.length > 0) res.json(result)
             else res.sendStatus(400)
         }
         catch {
             res.sendStatus(400)
         }
+
     },
 
-    async patch(req, res) {
-        try {
+    async put(req, res) {
+        try{
             let data = req.body
-            delete data._id
+            data.header = data.header.trim()
+            data.text = data.text.trim()
+            if (data.header.length < 4) return res.sendStatus(460)
+            if (data.text.length < 12) return res.sendStatus(461)
+            data.owner = mongo.ObjectId(data.owner)
+            data.recipe = mongo.ObjectId(data.recipe)
+            data.date = new Date
             let db = await connect()
-            let result = await db.collection("comments").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: data })
-            if (result.modifiedCount == 1) res.sendStatus(200)
+            let test = await db.collection("comments").findOne({ owner: data.owner })
+            if (test != null) return res.sendStatus(462)
+            let result = await db.collection("comments").insertOne(data)
+            if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
         }
         catch {

@@ -2,23 +2,17 @@
   <div style="min-height:90vh">
     <div class="row">
         <DishCard v-bind:recipe="recipe" />
-        <div class="col-5">Comments</div>
+        <Comments v-bind:recipe="recipe" />
     </div>
   </div>
 </template>
 
 <script>
 import DishCard from "../components/DishCard"
+import Comments from "../components/Comments"
 
 export default {
-  components: { DishCard },
+  components: { DishCard, Comments },
   props: ["recipe"],
-
-  data() {
-    return {
-      error: "",
-      description: ""
-    };
-  },
-};
+}
 </script>

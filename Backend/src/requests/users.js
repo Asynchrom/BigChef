@@ -52,7 +52,9 @@ export default {
         try {
             let db = await connect()
             let result = await db.collection("users").updateOne({ _id: mongo.ObjectId(req.body._id) }, { $set: {bookmarks: req.body.bookmarks} })
-            if (result.modifiedCount == 1) res.sendStatus(200)
+            if (result.modifiedCount == 1) {
+                res.sendStatus(200)
+            }
             else res.sendStatus(400)
         }
         catch {

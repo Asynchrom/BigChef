@@ -43,8 +43,7 @@ export default {
     },
 
     async patch(req, res) {
-        try {
-            console.log(req.body)
+        try {y
             let _id = req.body._id
             delete req.body._id
             delete req.body.owner

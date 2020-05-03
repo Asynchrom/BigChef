@@ -66,6 +66,7 @@ export default {
 
     async getBkm(req, res) {
         try {
+            if(req.body.length == 0) return res.sendStatus(460)
             let search = {  
                 $or: []
             }
