@@ -1,4 +1,4 @@
-# todo-app-backend
+# big-chef-backend
 
 ## Project setup
 ```

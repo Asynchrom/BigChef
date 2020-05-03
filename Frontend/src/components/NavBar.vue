@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <router-link class="navbar-brand text-white ml-3" style="font-family:'Merienda One'" to="/">BigChief</router-link>
+    <router-link class="navbar-brand text-white ml-3" style="font-family:'Merienda One'" to="/">BigChef</router-link>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent">
       <span class="navbar-toggler-icon"></span>
     </button>

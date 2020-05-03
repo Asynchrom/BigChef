@@ -17,7 +17,7 @@ export default () => {
                 if (error) {
                     reject(error)
                 } else {
-                    db = client.db("bigchief")
+                    db = client.db("bigchef")
                     resolve(db)
                 }
             })
