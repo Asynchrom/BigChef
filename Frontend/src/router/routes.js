@@ -8,12 +8,6 @@ const routes = [
       component: Home
     },
     {
-      path: '/notes',
-      name: 'Notes',
-      meta: { requiresAuth: true },
-      component: () => import(/* webpackChunkName: "notes" */ '../views/Notes.vue')
-    },
-    {
       path: '/recipes',
       name: 'Recipes',
       meta: { requiresAuth: true },
@@ -29,6 +23,12 @@ const routes = [
         if (from.name != "Recipes" && from.name != "MyRecipes" && from.name != "Bookmarks") next({ name: "Recipes" });
         else next()
       }
+    },
+    {
+      path: '/notes',
+      name: 'Notes',
+      meta: { requiresAuth: true },
+      component: () => import(/* webpackChunkName: "notes" */ '../views/Notes.vue')
     },
     {
       path: '/bookmarks',

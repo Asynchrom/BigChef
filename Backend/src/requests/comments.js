@@ -10,14 +10,12 @@ export default {
             cursor.close()
             if (result.length > 0) res.json(result)
             else res.sendStatus(463)
-        }
-        catch {
+        } catch {
             res.sendStatus(400)
         }
-
     },
 
-    async put(req, res) {
+    async set(req, res) {
         try{
             let data = req.body
             data.header = data.header.trim()
@@ -34,8 +32,7 @@ export default {
             let result = await db.collection("comments").insertOne(data)
             if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
-        }
-        catch {
+        } catch {
             res.sendStatus(400)
         }
     }

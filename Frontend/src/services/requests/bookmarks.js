@@ -1,51 +1,43 @@
 import { Service } from "../service"
 import store from "../../store"
 
-let bookmarks = new Array
+let myLocalBookmarkedRecipes = new Array
 let refresh = true
 
 export default {
-    async getAll() {
+    async get() {
         if (refresh) {
-            let response = await Service.post("/dishes/bkm", store.credentials.bookmarks)
-            bookmarks = await response.data
+            let response = await Service.post("/recipes/user/bookmarks", store.credentials.bookmarks)
+            myLocalBookmarkedRecipes = response.data
             refresh = false
         }
-        return bookmarks
+        return myLocalBookmarkedRecipes
     },
 
-    async bookmarkSet(recipe) {
-        let _id = recipe._id
-        let tmp = store.credentials.bookmarks
-        if (store.credentials.bookmarks.includes(_id)) return
-        tmp.push(_id)
-        await Service.patch("/users/bkm", {_id: store.credentials._id, bookmarks: tmp })
-        store.credentials.bookmarks = tmp
-        bookmarks.unshift(recipe)
-        sessionStorage.setItem('bookmarks', JSON.stringify(tmp))
+    async set(recipe) {
+        if (store.credentials.bookmarks.includes(recipe._id)) return
+        let tmp = store.credentials
+        tmp.bookmarks.push(recipe._id)
+        await Service.patch("/users", tmp)
+        store.credentials = tmp
+        myLocalBookmarkedRecipes.unshift(recipe)
+        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
     },
 
-    async bookmarkPop(recipe) {
-        let _id = recipe._id
-        let tmp = store.credentials.bookmarks
+    async delete(recipe) {
+        let tmp = store.credentials
         let i = 0
-        tmp.forEach(e => {
-            if (_id == e) {
-                tmp.splice(i, 1)
-                return
-            }
+        tmp.bookmarks.forEach(e => {
+            if (recipe._id == e) return tmp.bookmarks.splice(i, 1)
             i++
         })
-        await Service.patch("/users/bkm", {_id: store.credentials._id, bookmarks: tmp })
-        store.credentials.bookmarks = tmp
+        await Service.patch("/users", tmp)
+        store.credentials = tmp
         i = 0
-        bookmarks.forEach(e => {
-            if (_id == e._id) {
-                bookmarks.splice(i, 1)
-                return
-            }
+        myLocalBookmarkedRecipes.forEach(e => {
+            if (recipe._id == e._id) return myLocalBookmarkedRecipes.splice(i, 1)
             i++
         })
-        sessionStorage.setItem('bookmarks', JSON.stringify(tmp))
+        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
     }
 }

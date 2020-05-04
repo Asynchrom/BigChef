@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import comments from "./requests/comments"
-import dishes from "./requests/dishes"
+import recipes from "./requests/recipes"
 import notes from "./requests/notes"
 import users from "./requests/users"
 
@@ -13,20 +13,18 @@ app.use(express.json())
 app.listen(port)
 
 app.get('/comments/:id', comments.get)
-app.put('/comments', comments.put)
+app.put('/comments', comments.set)
 
-app.post('/dishes/get', dishes.get)
-app.post('/dishes/bkm', dishes.getBkm)
-app.put('/dishes', dishes.put)
-app.patch('/dishes', dishes.patch)
-app.get('/dishes', dishes.getAll)
+app.get('/recipes', recipes.get)
+app.put('/recipes', recipes.set)
+app.patch('/recipes/:id/delete', recipes.delete)
+app.post('/recipes/user', recipes.personal)
+app.post('/recipes/user/bookmarks', recipes.bookmarks)
 
-app.post('/notes/get', notes.get)
-app.put('/notes', notes.put)
-app.post('/notes', notes.post)
-app.patch('/notes', notes.patch)
+app.post('/notes', notes.get)
+app.put('/notes', notes.set)
+app.get('/notes/:id', notes.delete)
 
-app.put('/users', users.put)
-app.post('/users', users.post)
-app.patch('/users', users.patch)
-app.patch('/users/bkm', users.patchBkm)
+app.post('/users', users.login)
+app.put('/users', users.signup)
+app.patch('/users', users.change)

@@ -5,24 +5,24 @@
       <span v-if="error" class="text-danger">{{ error }}<hr /></span>
       <div class="form-group">
         <label>Username</label>
-        <input v-bind:disabled="disable" v-model="store.credentials.username" v-on:keydown.enter="login()" type="username" class="form-control" />
+        <input v-bind:disabled="disable" v-model="store.credentials.username" v-on:keydown.enter="userLogin()" type="username" class="form-control" />
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input v-bind:disabled="disable" v-model="store.credentials.password" v-on:keydown.enter="login()" type="password" class="form-control" />
+        <input v-bind:disabled="disable" v-model="store.credentials.password" v-on:keydown.enter="userLogin()" type="password" class="form-control" />
       </div>
       <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" />
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
-      <button v-bind:disabled="disable" v-on:click="login()" class="btn btn-primary mx-auto d-block">Submit</button>
+      <button v-bind:disabled="disable" v-on:click="userLogin()" class="btn btn-primary mx-auto d-block">Submit</button>
     </div>
   </div>
 </template>
 
 <script>
-import { Users } from "../services";
-import store from "../store";
+import { Users } from "../services"
+import store from "../store"
 
 export default {
   data() {
@@ -30,18 +30,18 @@ export default {
       store,
       disable: false,
       error: ""
-    };
+    }
   },
 
   methods: {
-    async login() {
+    async userLogin() {
       try {
-        this.disable = true
-        await Users.login();
-        this.$router.replace({ name: "Home" });
-      } catch {
-        this.error = "Wrong credentials!";
-        this.disable = false;
+          this.disable = true
+          await Users.login();
+          this.$router.replace({ name: "Home" });
+      } catch (error) {
+          this.error = "Wrong credentials!";
+          this.disable = false;
       }
     }
   }

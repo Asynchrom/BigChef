@@ -12,27 +12,14 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!store.authenticated) {
-      store.credentials._id = sessionStorage.getItem('_id')
-      if(store.credentials._id) {
-        store.credentials.username = sessionStorage.getItem('username')
-        store.credentials.password = sessionStorage.getItem('password')
-        store.credentials.gender = sessionStorage.getItem('gender')
-        store.credentials.bookmarks = JSON.parse(sessionStorage.getItem('bookmarks'))
-        store.authenticated = true
-      }
+  if (!store.authenticated && sessionStorage.getItem('credentials') != null) {
+    store.credentials = JSON.parse(sessionStorage.getItem('credentials'))
+    store.authenticated = true
   }
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.authenticated) {
-      next({ name: 'Login' })
-    }
-    else {
-      next()
-    }
-  }
-  else {
-    next()
-  }
+  if (to.matched.some(record => record.meta.requiresAuth))
+    if (!store.authenticated) next({ name: 'Login' })
+    else next()
+  else next()
 })
 
 export default router

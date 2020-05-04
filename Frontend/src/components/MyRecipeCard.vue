@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { Dishes } from "../services"
+import { Recipes } from "../services"
 
 export default {
     props: ["recipe"],
@@ -25,12 +25,12 @@ export default {
             event.preventDefault()
             try {
                 this.disable = true
-                await Dishes.delete(this.recipe._id)
+                await Recipes.delete(this.recipe._id)
             } catch (error) {
                 this.error = error
                 this.disable = false
             }
         }
-    },
+    }
 }
 </script>

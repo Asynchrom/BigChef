@@ -6,35 +6,35 @@
     </div>
     <div v-else class="card text-white bg-secondary m-3 float-left" style="width: 18rem; height: 14rem;">
       <div class="card-header">
-        <span v-on:keydown.enter="saveCard()" v-on:input="card.header = $event.target.innerText"
+        <span v-on:keydown.enter="saveNote()" v-on:input="card.header = $event.target.innerText"
           v-bind:contenteditable="!disable">{{card.header}}</span>
         <div v-if="disable" class="spinner-border spinner-border-sm float-right mt-1" role="status"></div>
         <button v-else v-on:click="closeCard()" type="button" class="close text-white">&times;</button>
       </div>
       <div class="card-body">
-        <h5 v-on:keydown.enter="saveCard()" v-on:input="card.title = $event.target.innerText"
+        <h5 v-on:keydown.enter="saveNote()" v-on:input="card.title = $event.target.innerText"
           v-bind:contenteditable="!disable" class="card-title">{{card.title}}</h5>
         <p
-          v-on:keydown.enter="saveCard()" v-on:input="card.text = $event.target.innerText"
+          v-on:keydown.enter="saveNote()" v-on:input="card.text = $event.target.innerText"
           v-bind:contenteditable="!disable" class="card-text">{{card.text}}</p>
       </div>
     </div>
-    <TaskCard v-for="card in cards" v-bind:key="card._id" v-bind:card="card" />
+    <NoteCard v-for="note in notes" v-bind:key="note._id" v-bind:note="note" />
   </div>
 </template>
 
 <script>
-import TaskCard from "../components/TaskCard"
+import NoteCard from "../components/NoteCard"
 import { Notes } from "../services"
 
 export default {
-  components: { TaskCard },
+  components: { NoteCard },
 
   data() {
     return {
       disable: false,
       clicked: false,
-      cards: new Array(),
+      notes: new Array(),
       error: "",
       card: {
         header: "Food",
@@ -46,22 +46,22 @@ export default {
 
   async mounted() {
     try {
-      this.cards = await Notes.get()
+        this.notes = await Notes.get()
     } catch(error) {
-      this.error = error
+        this.error = error
     }
   },
 
   methods: {
-    async saveCard() {
+    async saveNote() {
       try {
-        this.disable = true
-        await Notes.set(this.card)
-        this.closeCard()
-        this.disable = false
+          this.disable = true
+          await Notes.set(this.card)
+          this.closeCard()
       } catch (error) {
-        this.error = error
-        this.disable = false
+          this.error = error
+      } finally {
+          this.disable = false
       }
     },
 

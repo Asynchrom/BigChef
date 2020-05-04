@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { Dishes } from "../services"
 import store from "../store"
 
 export default {
@@ -24,7 +23,6 @@ export default {
     data() {
         return {
             store,
-            error: "",
             description: ""
         }
     },

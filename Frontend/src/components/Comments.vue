@@ -43,7 +43,6 @@
 <script>
 import { Comments } from "../services"
 import store from "../store"
-import comments from '../services/requests/comments'
 
 export default {
     props: ["recipe"],
@@ -75,16 +74,11 @@ export default {
         try {
             if (this.recipe.by == store.credentials.username) this.contains = true
             this.comments = await Comments.get(this.recipe)
-            this.comments.forEach(e => {
-                if(e.by == store.credentials.username){
-                    this.contains = true
-                    return
-                }
-            })
-            this.loading = false
+            this.comments.forEach(e => { if (e.by == store.credentials.username) return this.contains = true})
         } catch (error) {
             if (error.toString().includes('463')) this.nocomment = true
             else this.error = "Something went wrong!"
+        } finally {
             this.loading = false
         }
     },
@@ -96,13 +90,13 @@ export default {
             this.comment.rating = this.selected
             let response = await Comments.set(this.comment, this.recipe._id)
             this.comments.unshift(response)
+            this.nocomment = false
             this.contains = true
             this.error = ''
-            this.nocomment = false
         } catch (error) {
+            this.error = "Something went wrong!"
             if (error.toString().includes('460')) this.error = "Title is too short!"
-            else if (error.toString().includes('461')) this.error = "Review is too short!"
-            else this.error = "Something went wrong!"
+            if (error.toString().includes('461')) this.error = "Review is too short!"
             this.disabled = false
         }
       }

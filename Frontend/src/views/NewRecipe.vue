@@ -6,12 +6,12 @@
           <h1>New Recipe</h1>
         </div>
         <div class="col-7">
-          <button v-bind:disabled="disable" v-on:click="save()" class="btn btn-primary mt-2">Submit</button>
+          <button v-bind:disabled="disable" v-on:click="saveRecipe()" class="btn btn-primary mt-2">Submit</button>
         </div>
       </div>
       <hr />
       <span v-if="error" class="text-danger">{{ error }}<hr /></span>
-      <span v-if="changed" class="text-success">Recipe added!<hr /></span>
+      <span v-else-if="changed" class="text-success">Recipe added!<hr /></span>
       <div class="form-group row">
         <div class="col">
           <label>Name:</label>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { Dishes } from "../services";
+import { Recipes } from "../services";
 
 export default {
   data() {
@@ -61,7 +61,7 @@ export default {
         selected: '',
         options: [
             { text: 'Soup', value: 'Soup' },
-            { text: 'Breakfast', value: 'Breakfast' },
+            { text: 'Appetizer', value: 'Appetizer' },
             { text: 'Main dish', value: 'Main dish' },
             { text: 'Salad', value: 'Salad' },
             { text: 'Dessert', value: 'Dessert' }
@@ -77,27 +77,26 @@ export default {
     };
   },
 
-   watch: {
+  watch: {
     selected: function (value) {
       this.recipe.type = value
     }
   }, 
 
   methods: {
-    async save() {
+    async saveRecipe() {
       try {
-        this.disable = true
-        await Dishes.save(this.recipe)
-        this.error = ""
-        this.disable = false
-        this.changed = true
-        this.selected = ''
-        this.recipe = new Object()
+          this.disable = true
+          await Recipes.set(this.recipe)
+          this.error = ""
+          this.selected = ''
+          this.recipe = new Object()
+          this.changed = true
       } catch (error) {
-        if (error.toString().includes('460')) this.error = "All fields are required!"
-        else this.error = "Something went wrong!"
-        this.disable = false
-        this.changed = false
+          this.error = "Something went wrong!"
+          if (error.toString().includes('460')) this.error = "All fields are required!"
+      } finally {
+          this.disable = false
       }
     }
   }

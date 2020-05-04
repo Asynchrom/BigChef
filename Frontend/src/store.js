@@ -4,6 +4,6 @@ export default {
         username: new String,
         password: new String,
         bookmarks: new Array,
-        gender: "Male"
+        gender: 'Male'
     }
 }

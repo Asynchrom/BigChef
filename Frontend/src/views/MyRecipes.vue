@@ -12,7 +12,7 @@
 
 <script>
 import MyRecipeCard from "../components/MyRecipeCard"
-import { Dishes } from "../services"
+import { Recipes } from "../services"
 
 export default {
   components: { MyRecipeCard },
@@ -26,9 +26,9 @@ export default {
 
   async mounted() {
     try {
-      this.recipes = await Dishes.get()
+        this.recipes = await Recipes.getMy()
     } catch(error) {
-      this.error = error
+        this.error = error
     }
   },
 }

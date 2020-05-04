@@ -1,47 +1,32 @@
 import { Service } from "../service"
 import store from "../../store"
 
-let cards = new Array
+let localNotes = new Array
 let refresh = true
 
 export default {
     async get() {
         if (refresh) {
-            let response = await Service.post("/notes/get", {_id: store.credentials._id})
-            cards = await response.data
+            let response = await Service.post("/notes", { _id: store.credentials._id })
+            localNotes = response.data
             refresh = false
         }
-        return cards
+        return localNotes
     },
 
-    async set(card) {
-        card.owner = store.credentials._id
-        let response = await Service.put("/notes", card)
-        card._id = response.data
-        if(cards.length == 0) location.reload()
-        cards.unshift(card)
+    async set(note) {
+        note.owner = store.credentials._id
+        let response = await Service.put("/notes", note)
+        note._id = response.data
+        if(localNotes.length == 0) location.reload()
+        localNotes.unshift(note)
     },
 
-    async pop(_id) {
-        await Service.post("/notes", { _id : _id })
+    async delete(id) {
+        await Service.get(`/notes/${id}`)
         let i = 0
-        cards.forEach(e => {
-            if (_id == e._id) {
-                cards.splice(i, 1)
-                return
-            }
-            i++
-        })
-    },
-
-    async update(card) {
-        await Service.patch("/notes", card)
-        let i = 0
-        cards.forEach(e => {
-            if (card._id == e._id) {
-                cards[i] = card
-                return
-            }
+        localNotes.forEach(e => {
+            if (id == e._id) return localNotes.splice(i, 1)
             i++
         })
     }

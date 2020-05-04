@@ -3,10 +3,10 @@
     <div class="float-left m-2" style="max-width:350px; max-height:350px">
         <img v-bind:src="recipe.img" class="card-img-top" style="height: 300px" />
     </div>
-    <button v-bind:disabled="disabled" v-if="bookmarked" v-on:click="bookmark()" class="btn text-success m-3 float-left shadow-none">
+    <button v-bind:disabled="disabled" v-if="bookmarked" v-on:click="changeBookmark()" class="btn text-success m-3 float-left shadow-none">
       <i class="fas fa-bookmark m-auto fa-4x"></i>
     </button>
-    <button v-bind:disabled="disabled" v-else v-on:click="bookmark()" class="btn text-primary bg-transparent m-3 float-left shadow-none">
+    <button v-bind:disabled="disabled" v-else v-on:click="changeBookmark()" class="btn text-primary bg-transparent m-3 float-left shadow-none">
       <i class="far fa-bookmark m-auto fa-4x"></i>
     </button>
     <div class="float-left m-2" style="max-width:300px;">
@@ -58,25 +58,21 @@ export default {
     },
 
     mounted() {
-      try {
         if (store.credentials.bookmarks.includes(this.recipe._id)) this.bookmarked = true
-      }
-      catch (error) {
-        this.error = error
-      }
     },
 
     methods: {
-      async bookmark() {
+      async changeBookmark() {
         try {
-          this.disabled = true
-          if (this.bookmarked) await Bookmarks.bookmarkPop(this.recipe)
-          else await Bookmarks.bookmarkSet(this.recipe)
-          this.bookmarked = !this.bookmarked
-          this.disabled = false
+            this.disabled = true
+            if (this.bookmarked) await Bookmarks.delete(this.recipe)
+            else await Bookmarks.set(this.recipe)
+            this.bookmarked = !this.bookmarked
         } catch (error) {
-          this.error = error
-          this.disabled = false
+          console.log(error)
+            this.error = error
+        } finally {
+            this.disabled = false
         }
       }
     }

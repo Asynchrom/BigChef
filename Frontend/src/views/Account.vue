@@ -3,18 +3,18 @@
     <div class="mx-auto align-self-center text-center" style="max-width:300px">
       <h1>Account</h1><hr />
       <span v-if="error" class="text-danger">{{ error }}<hr /></span>
-      <span v-if="changed" class="text-success">Password changed!<hr /></span>
+      <span v-else-if="changed" class="text-success">Password changed!<hr /></span>
       <div class="form-group">
         <label>Username</label>
         <input v-model="username" disabled="true" type="username" class="form-control" />
       </div>
       <div class="form-group">
         <label>New password</label>
-        <input v-bind:disabled="disable" v-model="password" v-on:keydown.enter="change()" type="password" class="form-control" />
+        <input v-bind:disabled="disable" v-model="newPassword" v-on:keydown.enter="change()" type="password" class="form-control" />
       </div>
       <div class="form-group">
-        <label>Confirm password</label>
-        <input v-bind:disabled="disable" v-model="passwordCheck" v-on:keydown.enter="change()" type="password" class="form-control" />
+        <label>Old password</label>
+        <input v-bind:disabled="disable" v-model="oldPassword" v-on:keydown.enter="change()" type="password" class="form-control" />
       </div>
       <button v-bind:disabled="disable" v-on:click="change()" class="btn btn-primary mx-auto d-block">Change</button>
     </div>
@@ -30,32 +30,30 @@ export default {
     return {
       store,
       username: store.credentials.username,
-      password: "",
-      passwordCheck: "",
-      error: "",
+      newPassword: new String,
+      oldPassword: new String,
       changed: false,
-      disable: false
+      disable: false,
+      error: ""
     }
   },
 
   methods: {
     async change() {
       try {
-        if (this.password != this.passwordCheck) {
-          this.changed = false
-          return this.error = "Password doesn't match!"
-        }
-        this.disable = true
-        this.store.credentials.password = this.password
-        await Users.change()
-        this.error = ""
-        this.disable = false
-        this.changed = true
-      } catch(error) {
-          if (error.toString().includes('460')) this.error = "Passwords too short!"
-          else this.error = "Something went wrong!"
+          if (this.oldPassword != this.store.credentials.password)
+            return this.error = "Wrong password!"
+          this.disable = true
+          this.store.credentials.password = this.newPassword
+          await Users.change()
+          this.error = ""
+          this.changed = true
+      } catch (error) {
+          this.error = "Something went wrong!"
+          if (error.toString().includes('460')) this.error = "Password is too short!"
+          this.store.credentials.password = this.oldPassword
+      } finally {
           this.disable = false
-          this.changed = false
       }
     }
   }

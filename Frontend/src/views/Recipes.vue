@@ -11,7 +11,7 @@
 
 <script>
 import RecipeCard from "../components/RecipeCard.vue"
-import { Dishes } from "../services"
+import { Recipes } from "../services"
 
 export default {
   components: { RecipeCard },
@@ -26,7 +26,7 @@ export default {
 
   async mounted() {
     try {
-      this.recipes = await Dishes.getAll()
+      this.recipes = await Recipes.get()
       this.loading = false
     } catch(error) {
       this.error = error

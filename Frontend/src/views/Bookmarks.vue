@@ -21,8 +21,8 @@ export default {
 
   data() {
     return {
-      loading: true,
       recipes: new Array(),
+      loading: true,
       empty: false,
       error: ""
     }
@@ -30,11 +30,11 @@ export default {
 
   async mounted() {
     try {
-      this.recipes = await Bookmarks.getAll()
-      this.loading = false
+        this.recipes = await Bookmarks.get()
+        this.loading = false
     } catch(error) {
-      if(error.toString().includes('460')) this.empty = true
-      this.error = error
+        if(error.toString().includes('460')) this.empty = true
+        this.error = error
     }
   },
 

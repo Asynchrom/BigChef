@@ -5,18 +5,17 @@ export default {
     async get(req, res) {
         try {
             let db = await connect()
-            let cursor = await db.collection("notes").find({ owner: mongo.ObjectId(req.body._id) }).sort({date: -1})
+            let cursor = await db.collection("notes").find({ owner: mongo.ObjectId(req.body._id) }).sort({ date: -1 })
             let result = await cursor.toArray()
             cursor.close()
             if (result.length > 0) res.json(result)
             else res.sendStatus(400)
-        }
-        catch {
+        } catch {
             res.sendStatus(400)
         }
     },
 
-    async put(req, res) {
+    async set(req, res) {
         try{
             req.body.owner = mongo.ObjectId(req.body.owner)
             req.body.date = new Date
@@ -24,35 +23,18 @@ export default {
             let result = await db.collection("notes").insertOne(req.body)
             if (result.insertedCount == 1) res.json(result.insertedId)
             else res.sendStatus(400)
-        }
-        catch {
+        } catch {
             res.sendStatus(400)
         }
     },
 
-    async post(req, res) {
+    async delete(req, res) {
         try {
             let db = await connect()
-            let result = await db.collection("notes").deleteOne({ _id: mongo.ObjectId(req.body._id) })
+            let result = await db.collection("notes").deleteOne({ _id: mongo.ObjectId(req.params.id) })
             if (result.deletedCount == 1) res.sendStatus(200)
             else res.sendStatus(400)
-        }
-        catch {
-            res.sendStatus(400)
-        }
-    },
-
-    async patch(req, res) {
-        try {y
-            let _id = req.body._id
-            delete req.body._id
-            delete req.body.owner
-            let db = await connect()
-            let result = await db.collection("notes").updateOne({ _id: mongo.ObjectId(_id) }, { $set: req.body })
-            if (result.modifiedCount == 1) res.sendStatus(200)
-            else res.sendStatus(400)
-        }
-        catch {
+        } catch {
             res.sendStatus(400)
         }
     }
