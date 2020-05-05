@@ -31,7 +31,7 @@ export default {
         await Service.patch(`/recipes/${id}/delete`, { owner: store.credentials._id })
         let i = 0
         myLocalRecipes.forEach(e => {
-            if (_id == e._id) return myLocalRecipes.splice(i, 1)
+            if (id == e._id) return myLocalRecipes.splice(i, 1)
             i++
         })
     }

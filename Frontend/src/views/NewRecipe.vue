@@ -41,7 +41,7 @@
       </div>
       <div class="form-group">
         <label>Description:</label>
-        <textarea v-bind:disabled="disable" v-model="recipe.description" class="form-control" placeholder="Mix all ingredients together and fry them in frying pan." rows="3"></textarea>
+        <textarea v-bind:disabled="disable" v-model="recipe.description" class="form-control" placeholder="Mix all ingredients together and fry them a in frying pan." rows="3"></textarea>
       </div>
       <label>Image URL:</label>
       <input v-bind:disabled="disable" v-model="recipe.img" class="form-control" placeholder="https://example.com/pancakes.jpg" />      

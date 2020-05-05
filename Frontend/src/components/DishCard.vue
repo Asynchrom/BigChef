@@ -1,6 +1,6 @@
 <template>
   <div class="col-7 container-fluid">
-    <div class="float-left m-2" style="max-width:350px; max-height:350px">
+    <div class="float-left m-2" style="width:350px; height:350px">
         <img v-bind:src="recipe.img" class="card-img-top" style="height: 300px" />
     </div>
     <button v-bind:disabled="disabled" v-if="bookmarked" v-on:click="changeBookmark()" class="btn text-success m-3 float-left shadow-none">

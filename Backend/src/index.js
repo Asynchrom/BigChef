@@ -4,6 +4,7 @@ import comments from "./requests/comments"
 import recipes from "./requests/recipes"
 import notes from "./requests/notes"
 import users from "./requests/users"
+import daily from "./requests/daily"
 
 const app = express()
 const port = 3000
@@ -28,3 +29,5 @@ app.get('/notes/:id', notes.delete)
 app.post('/users', users.login)
 app.put('/users', users.signup)
 app.patch('/users', users.change)
+
+app.get('/daily', daily.get)
