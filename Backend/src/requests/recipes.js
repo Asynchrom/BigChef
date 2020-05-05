@@ -4,8 +4,30 @@ import connect from "../db"
 export default {
     async get(req, res) {
         try {
+            let search = {}
+            if (req.query._any) {
+                let terms = req.query._any.split(' ');
+                let fields = ['name', 'type', 'ingredients', 'time', 'by'];
+
+                search = {
+                    $and: [],
+                };
+        
+                terms.forEach((term) => {
+                    let or = {
+                        $or: [],
+                    };
+        
+                    fields.forEach((field) => {
+                        or.$or.push({ [field]: new RegExp(term, "i") });
+                    });
+        
+                    search.$and.push(or);
+                });
+            }
+
             let db = await connect()
-            let cursor = await db.collection("recipes").find().project({ owner: 0 }).sort({ date: -1 })
+            let cursor = await db.collection("recipes").find(search).project({ owner: 0 }).sort({ date: -1 })
             let result = await cursor.toArray()
             cursor.close()
             if (result.length > 0) res.json(result)
@@ -19,7 +41,6 @@ export default {
         try {
             let data = req.body
             data.name = data.name.trim()
-            data.time = data.time.trim()
             data.ingredients = data.ingredients.trim()
             data.description = data.description.trim()
             data.img = data.img.trim()

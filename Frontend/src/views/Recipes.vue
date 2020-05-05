@@ -1,5 +1,14 @@
 <template>
   <div class="row" style="min-height:90vh">
+      <button class="btn btn-primary rounded-circle shadow-none position-absolute"  style="margin-left: 50vw; height: 60px; width: 60px; z-index: 1; top: 20px"
+        type="button" data-toggle="collapse" data-target="#collapseExample">
+        <i class="fas fa-angle-double-down"></i>
+      </button>
+      <div class="collapse vw-100" id="collapseExample">
+        <div class="card card-body bg-light border-0">
+            <input v-model="search" class="form-control mx-auto" type="search" placeholder="Search" style="width: 75%">
+        </div>
+      </div>
       <div v-if="loading" class="spinner-border text-primary mx-auto" role="status" style="width: 100px; height: 100px; margin-top: 35vh">
         <span class="sr-only">Loading...</span>
       </div>
@@ -10,6 +19,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import RecipeCard from "../components/RecipeCard.vue"
 import { Recipes } from "../services"
 
@@ -18,10 +28,17 @@ export default {
 
   data() {
     return {
-      loading: true,
       recipes: new Array(),
+      search: new String,
+      loading: true,
       error: ""
     }
+  },
+
+  watch: {
+    search: _.debounce(function(value) {
+        this.getRecipes(value);
+    }, 500)
   },
 
   async mounted() {
@@ -32,5 +49,15 @@ export default {
       this.error = error
     }
   },
+
+   methods: {
+    async getRecipes(value) {
+      try {
+          this.recipes = await Recipes.get(value)
+      } catch (error) {
+          this.error = error
+      }
+    }
+  }
 }
 </script>

@@ -8,7 +8,7 @@ export default {
             if (req.body.username.length < 4) return res.sendStatus(461)
 
             let db = await connect()
-            let test = await db.collection("users").findOne({ username: req.body.username })
+            let test = await db.collection("users").findOne({ username: new RegExp(req.body.username, "i") })
             if (test != null) return res.sendStatus(462)
 
             let result = await db.collection("users").insertOne(req.body)

@@ -1,8 +1,15 @@
 import { Service } from "../service"
 
+let localDailies = new Array
+let refresh = true
+
 export default {
     async get() {
-        let response = await Service.get("/daily")
-        return response.data
-    },
+        if (refresh) {
+            let response = await Service.get("/daily")
+            localDailies = response.data
+            refresh = false
+        }
+        return localDailies
+    }
 }

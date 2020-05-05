@@ -1,15 +1,15 @@
 <template>
   <div class="container-fluid">
     <div v-if="!clicked" v-on:click="clicked = true"
-      class="card btn border-secondary text-secondary bg-transparent m-3 float-left" style="width: 18em; height: 14em">
+      class="card btn text-secondary bg-transparent m-3 float-left" style="width: 18em; height: 14em">
       <i class="far fa-plus-square m-auto fa-3x"></i>
     </div>
-    <div v-else class="card text-white bg-secondary m-3 float-left" style="width: 18rem; height: 14rem;">
+    <div v-else class="card m-3 float-left" style="width: 18rem; height: 14rem;">
       <div class="card-header">
         <span v-on:keydown.enter="saveNote()" v-on:input="card.header = $event.target.innerText"
           v-bind:contenteditable="!disable">{{card.header}}</span>
         <div v-if="disable" class="spinner-border spinner-border-sm float-right mt-1" role="status"></div>
-        <button v-else v-on:click="closeCard()" type="button" class="close text-white">&times;</button>
+        <button v-else v-on:click="closeCard()" type="button" class="close ">&times;</button>
       </div>
       <div class="card-body">
         <h5 v-on:keydown.enter="saveNote()" v-on:input="card.title = $event.target.innerText"

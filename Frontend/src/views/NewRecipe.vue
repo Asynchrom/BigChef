@@ -28,7 +28,7 @@
         <div class="col-3">
           <label>Time:</label>
           <div class="input-group mb-3">
-            <input v-bind:disabled="disable" v-model="recipe.time" type="number" class="form-control text-right" placeholder="10" />
+            <input v-bind:disabled="disable" v-model.number="recipe.time" type="number" class="form-control text-right" placeholder="10" />
             <div class="input-group-append">
               <span class="input-group-text">min</span>
             </div>

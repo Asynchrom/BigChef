@@ -5,8 +5,11 @@ let myLocalRecipes = new Array
 let refresh = true
 
 export default {
-    async get() {
-        let response = await Service.get("/recipes")
+    async get(search) {
+        let data = {}
+        if (search) data.params = { _any: search }
+        console.log('idemo', data)
+        let response = await Service.get("/recipes", data)
         return response.data
     },
 

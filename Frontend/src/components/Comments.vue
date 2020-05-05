@@ -4,25 +4,25 @@
             {{error}}
         </div>
         <div v-else-if="nocomment" class="alert alert-primary m-4" role="alert">
-            There is no comments yet!
+            There is no reviews yet!
         </div>
         <div v-if="loading" class="text-center text-primary" style="margin-top: 10vh">
             <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status" >
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <div v-else-if="!contains" class="card m-4 bg-secondary">
-            <div class="card-header bg-secondary text-light">
-                <input v-model="comment.header" v-bind:disabled="disabled" placeholder="Write some nice title..." class="bg-secondary border-0 shadow-none text-light m-0" >
+        <div v-else-if="!contains" class="card m-4 bg-light">
+            <div class="card-header">
+                <input v-model="comment.header" v-bind:disabled="disabled" placeholder="Write some nice title..." class=" bg-transparent border-0 shadow-none m-0" >
             </div>
             <div class="card-body">
-                <blockquote class="blockquote mb-0 text-light">
-                    <textarea v-model="comment.text" v-bind:disabled="disabled" placeholder="Don't be too harsh with your review..." rows="1" maxlength="150"
-                        class="bg-secondary border-0 shadow-none text-light m-0" style="width: 100%"></textarea>
-                        <button v-on:click="post()" class="btn btn-light float-right">Post review</button>
-                        <select v-bind:disabled="disabled" v-model="selected" type="number" class="btn btn-light bg-white mr-sm-2 w-auto float-right">
-                            <option v-for="option in options" v-bind:key="option.value" v-bind:value="option.value">{{ option.text }}</option>
-                        </select>
+                <blockquote class="blockquote mb-0">
+                    <textarea v-model="comment.text" v-bind:disabled="disabled" class="form-control mb-2" rows="3" 
+                        maxlength="150" placeholder="Don't be too harsh with your review..."></textarea>
+                    <button v-on:click="post()" class="btn float-right">Post review</button>
+                    <select v-bind:disabled="disabled" v-model="selected" type="number" class="btn bg-light border-0 mr-sm-2 w-auto float-right">
+                        <option v-for="option in options" v-bind:key="option.value" v-bind:value="option.value">{{ option.text }}</option>
+                    </select>
                 </blockquote>
             </div>
         </div>
