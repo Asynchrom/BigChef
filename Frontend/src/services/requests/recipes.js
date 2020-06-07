@@ -8,7 +8,6 @@ export default {
     async get(search) {
         let data = {}
         if (search) data.params = { _any: search }
-        console.log('idemo', data)
         let response = await Service.get("/recipes", data)
         return response.data
     },

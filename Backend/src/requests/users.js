@@ -4,12 +4,12 @@ import connect from "../db"
 export default {
     async signup(req, res) {
         try {
-            if (req.body.password.length < 6) return res.sendStatus(460)
-            if (req.body.username.length < 4) return res.sendStatus(461)
+            if (req.body.password.length < 6) return res.status(400).send('Password is too short!')
+            if (req.body.username.length < 4) return res.status(400).send('Username is too short!')
 
             let db = await connect()
             let test = await db.collection("users").findOne({ username: new RegExp(req.body.username, "i") })
-            if (test != null) return res.sendStatus(462)
+            if (test != null) return res.status(400).send('Username is taken!')
 
             let result = await db.collection("users").insertOne(req.body)
             if (result.insertedCount == 1) res.json(result.insertedId)
@@ -32,7 +32,7 @@ export default {
 
     async change(req, res) {
         try {
-            if (req.body.password.length < 6) return res.sendStatus(460)
+            if (req.body.password.length < 6) return res.status(400).send("Password is too short!")
 
             let db = await connect()
             let result = await db.collection("users").updateOne(

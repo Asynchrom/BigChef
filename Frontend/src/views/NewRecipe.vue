@@ -93,8 +93,7 @@ export default {
           this.recipe = new Object()
           this.changed = true
       } catch (error) {
-          this.error = "Something went wrong!"
-          if (error.toString().includes('460')) this.error = "All fields are required!"
+          this.error = error.response.data
       } finally {
           this.disable = false
       }

@@ -26,7 +26,7 @@ export default {
     try {
         this.recipes = await Daily.get()
     } catch(error) {
-        this.error = error
+        this.error = error.response.data
     }
   }
 }

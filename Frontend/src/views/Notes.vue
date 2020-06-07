@@ -59,7 +59,7 @@ export default {
           await Notes.set(this.card)
           this.closeCard()
       } catch (error) {
-          this.error = error
+          this.error = error.response.data
       } finally {
           this.disable = false
       }

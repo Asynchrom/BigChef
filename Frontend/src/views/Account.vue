@@ -49,8 +49,7 @@ export default {
           this.error = ""
           this.changed = true
       } catch (error) {
-          this.error = "Something went wrong!"
-          if (error.toString().includes('460')) this.error = "Password is too short!"
+          this.error = error.response.data
           this.store.credentials.password = this.oldPassword
       } finally {
           this.disable = false

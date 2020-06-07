@@ -46,7 +46,7 @@ export default {
             data.img = data.img.trim()
 
             if (data.name == "" || data.type == "" || data.time == "" || data.ingredients == "" 
-                || data.description == "" || data.img == "") return res.sendStatus(460)
+                || data.description == "" || data.img == "") return res.status(400).send("All fields are required!")
 
             data.owner = mongo.ObjectId(req.body.owner)
             data.date = new Date
@@ -88,7 +88,7 @@ export default {
 
     async bookmarks(req, res) {
         try {
-            if(req.body.length == 0) return res.sendStatus(460)
+            if(req.body.length == 0) return res.status(460).send("No bookmarks found!")
 
             let search = {  
                 $or: []

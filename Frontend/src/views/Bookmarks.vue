@@ -33,8 +33,8 @@ export default {
         this.recipes = await Bookmarks.get()
         this.loading = false
     } catch(error) {
-        if(error.toString().includes('460')) this.empty = true
-        this.error = error
+        if(error.response.status == 460) this.empty = true
+        this.error = error.response.data
     }
   },
 

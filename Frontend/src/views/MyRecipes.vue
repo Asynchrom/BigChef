@@ -28,7 +28,7 @@ export default {
     try {
         this.recipes = await Recipes.getMy()
     } catch(error) {
-        this.error = error
+        this.error = error.response.data
     }
   },
 }

@@ -55,7 +55,7 @@ export default {
       try {
           this.recipes = await Recipes.get(value)
       } catch (error) {
-          this.error = error
+          this.error = error.response.data
       }
     }
   }

@@ -50,10 +50,7 @@ export default {
           await Users.signup()
           this.$router.replace({ name: "Home" })
       } catch (error) {
-          this.error = "Something went wrong!"
-          if (error.toString().includes("460")) this.error = "Password is too short!"
-          if (error.toString().includes("461")) this.error = "Username is too short!"
-          if (error.toString().includes("462")) this.error = "Username is taken!"
+          this.error = error.response.data
       } finally {
           this.disable = false
       }
