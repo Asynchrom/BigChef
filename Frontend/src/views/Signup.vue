@@ -48,7 +48,7 @@ export default {
           if (this.store.credentials.password != this.password)
             return this.error = "Passwords doesn't match!"
           await Users.signup()
-          this.$router.replace({ name: "Home" })
+          this.$router.replace({ name: "Login" })
       } catch (error) {
           this.error = error.response.data
       } finally {

@@ -3,21 +3,19 @@ import store from "../../store"
 
 export default {
     async signup() {
-        let response = await Service.put("/users", store.credentials)
-        store.credentials._id = response.data
-        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
-        store.authenticated = true
+        await Service.put("/users", store.credentials)
     },
 
     async login() {
         let response = await Service.post("/users", store.credentials)
-        store.credentials = response.data
-        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
+        store.credentials = response.data.user
+        store.token = response.data.token
+        localStorage.setItem('store', JSON.stringify(store))
         store.authenticated = true
     },
 
     async change() {
         await Service.patch("/users", store.credentials)
-        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
+        localStorage.setItem('store', JSON.stringify(store))
     }
 }

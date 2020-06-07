@@ -52,7 +52,7 @@ export default {
 
   methods: {
     logOut() {
-       window.sessionStorage.clear()
+       window.localStorage.removeItem('store')
     }
   }
 };

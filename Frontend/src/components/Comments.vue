@@ -76,7 +76,7 @@ export default {
             this.comments = await Comments.get(this.recipe)
             this.comments.forEach(e => { if (e.by == store.credentials.username) return this.contains = true})
         } catch (error) {
-            if (error.toString().includes('463')) this.nocomment = true
+            if (error.response.status == 460) this.nocomment = true
             else this.error = "Something went wrong!"
         } finally {
             this.loading = false
@@ -94,9 +94,7 @@ export default {
             this.contains = true
             this.error = ''
         } catch (error) {
-            this.error = "Something went wrong!"
-            if (error.toString().includes('460')) this.error = "Title is too short!"
-            if (error.toString().includes('461')) this.error = "Review is too short!"
+            this.error = error.response.data
             this.disabled = false
         }
       }

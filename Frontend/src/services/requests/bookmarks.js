@@ -21,7 +21,7 @@ export default {
         await Service.patch("/users", tmp)
         store.credentials = tmp
         myLocalBookmarkedRecipes.unshift(recipe)
-        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
+        localStorage.setItem('store', JSON.stringify(store))
     },
 
     async delete(recipe) {
@@ -38,6 +38,6 @@ export default {
             if (recipe._id == e._id) return myLocalBookmarkedRecipes.splice(i, 1)
             i++
         })
-        sessionStorage.setItem('credentials', JSON.stringify(store.credentials))
+        localStorage.setItem('store', JSON.stringify(store))
     }
 }

@@ -14,7 +14,7 @@ export default {
             else if (daily[0].date.getMonth() < date.getMonth()) ok = false
             else if (daily[0].date.getDate() < date.getDate()) ok = false
 
-            if (ok) return res.json(daily[0].recipes)
+            if (ok) res.json(daily[0].recipes)
 
             cursor = await db.collection("recipes").aggregate([
                 { $match : { by : "BigChef" }},
