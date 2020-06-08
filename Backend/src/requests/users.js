@@ -1,10 +1,7 @@
 import mongo from "mongodb"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
 import connect from "../db"
-
-dotenv.config()
 
 export default {
     async signup(req, res) {

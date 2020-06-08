@@ -6,9 +6,12 @@ import notes from "./requests/notes"
 import users from "./requests/users"
 import daily from "./requests/daily"
 import auth from "./auth"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json())

@@ -2,7 +2,7 @@ import axios from "axios"
 import store from '../store'
 
 let Service = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'https://big-chef-api.herokuapp.com/',
     timeout: 5000
 })
 
