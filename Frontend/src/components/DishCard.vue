@@ -69,7 +69,6 @@ export default {
             else await Bookmarks.set(this.recipe)
             this.bookmarked = !this.bookmarked
         } catch (error) {
-          console.log(error)
             this.error = error
         } finally {
             this.disabled = false
