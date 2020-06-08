@@ -20,7 +20,7 @@ export default {
             let data = req.body
             data.header = data.header.trim()
             data.text = data.text.trim()
-            if (typeof(data.rating) == "string" || data.rating < 1 || data.rating > 5) return res.sendStatus(470)
+            if (typeof(data.rating) == "string" || data.rating < 1 || data.rating > 5) return res.sendStatus(400)
             if (data.header.length < 4) return res.status(400).send("Title is too short!")
             if (data.text.length < 12) return res.status(400).send("Review is too short!")
             data.owner = mongo.ObjectId(data.owner)

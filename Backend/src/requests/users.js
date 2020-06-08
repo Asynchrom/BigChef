@@ -14,9 +14,11 @@ export default {
             if (test != null) return res.status(400).send("Username is taken!")
 
             req.body.password = await bcrypt.hash(req.body.password, 8)
-            
+
             let result = await db.collection("users").insertOne(req.body)
-            if (result.insertedCount == 1) res.sendStatus(200)
+            if (result.insertedCount == 1) {
+                res.sendStatus(200)
+            }
             else res.sendStatus(400)
         } catch {
             res.sendStatus(400)
@@ -27,7 +29,6 @@ export default {
         try {
             let db = await connect()
             let user = await db.collection("users").findOne({ username: req.body.username })
-
             if (user == null || !(await bcrypt.compare(req.body.password, user.password))) return res.sendStatus(400)
 
             delete user.password
@@ -58,7 +59,6 @@ export default {
     async update(req, res) {
         try {
             if (req.body.password.length < 6) return res.status(400).send("Password is too short!")
-            
             let db = await connect()
             let result = await db.collection("users").updateOne(
                 { _id: mongo.ObjectId(req.body._id) },
