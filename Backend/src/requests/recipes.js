@@ -30,10 +30,10 @@ export default {
             let cursor = await db.collection("recipes").find(search).project({ owner: 0 }).sort({ date: -1 })
             let result = await cursor.toArray()
             cursor.close()
-            if (result.length > 0) res.json(result)
-            else res.sendStatus(400)
+            if (result.length > 0) return res.json(result)
+            else return res.sendStatus(400)
         } catch {
-            res.sendStatus(400)
+            return res.sendStatus(400)
         }
     },
 
@@ -46,7 +46,7 @@ export default {
             data.img = data.img.trim()
 
             if (data.name == "" || data.type == "" || data.time == "" || data.ingredients == "" 
-                || data.description == "" || data.img == "") res.status(400).send("All fields are required!")
+                || data.description == "" || data.img == "") return res.status(400).send("All fields are required!")
 
             data.owner = mongo.ObjectId(req.body.owner)
             data.date = new Date
@@ -88,7 +88,7 @@ export default {
 
     async bookmarks(req, res) {
         try {
-            if(req.body.length == 0) res.status(460).send("No bookmarks found!")
+            if(req.body.length == 0) return res.status(460).send("No bookmarks found!")
 
             let search = {  
                 $or: []

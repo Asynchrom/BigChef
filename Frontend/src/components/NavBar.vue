@@ -47,12 +47,12 @@ export default {
   data() {
     return {
       store
-    };
+    }
   },
 
   methods: {
     logOut() {
-       window.localStorage.removeItem('store')
+       window.localStorage.removeItem("store")
     }
   }
 };

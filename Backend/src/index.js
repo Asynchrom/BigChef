@@ -29,6 +29,7 @@ app.get('/notes/:id', [auth], notes.delete)
 
 app.post('/users', users.login)
 app.put('/users', users.signup)
-app.patch('/users', [auth], users.change)
+app.patch('/users', [auth], users.update)
+app.patch('/users/bookmarks', [auth], users.change)
 
 app.get('/daily', daily.get)

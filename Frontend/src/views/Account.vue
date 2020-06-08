@@ -13,8 +13,8 @@
         <input v-bind:disabled="disable" v-model="newPassword" v-on:keydown.enter="change()" type="password" class="form-control" />
       </div>
       <div class="form-group">
-        <label>Old password</label>
-        <input v-bind:disabled="disable" v-model="oldPassword" v-on:keydown.enter="change()" type="password" class="form-control" />
+        <label>Confirm password</label>
+        <input v-bind:disabled="disable" v-model="confirmPassword" v-on:keydown.enter="change()" type="password" class="form-control" />
       </div>
       <button v-bind:disabled="disable" v-on:click="change()" class="btn btn-primary mx-auto d-block">Change</button>
     </div>
@@ -31,7 +31,7 @@ export default {
       store,
       username: store.credentials.username,
       newPassword: new String,
-      oldPassword: new String,
+      confirmPassword: new String,
       changed: false,
       disable: false,
       error: ""
@@ -41,8 +41,8 @@ export default {
   methods: {
     async change() {
       try {
-          if (this.oldPassword != this.store.credentials.password)
-            return this.error = "Wrong password!"
+          if (this.confirmPassword != this.newPassword)
+            return this.error = "Passwords doesn't match!"
           this.disable = true
           this.store.credentials.password = this.newPassword
           await Users.change()
@@ -50,7 +50,7 @@ export default {
           this.changed = true
       } catch (error) {
           this.error = error.response.data
-          this.store.credentials.password = this.oldPassword
+          this.store.credentials.password = this.confirmPassword
       } finally {
           this.disable = false
       }

@@ -14,11 +14,11 @@ export default {
             else if (daily[0].date.getMonth() < date.getMonth()) ok = false
             else if (daily[0].date.getDate() < date.getDate()) ok = false
 
-            if (ok) res.json(daily[0].recipes)
+            if (ok) return res.json(daily[0].recipes)
 
             cursor = await db.collection("recipes").aggregate([
                 { $match : { by : "BigChef" }},
-                { $sample: { size: 3 }},
+                { $sample: { size: 2 }},
                 { $project : { owner: 0 }}
             ])
             daily = await cursor.toArray()

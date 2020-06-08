@@ -10,6 +10,7 @@ export default (req, res, next) => {
         req.jwt = jwt.verify(authorization[1], process.env.JWT_SECRET)
         next()
     } catch {
+        console.log("shit")
         res.sendStatus(403)
     }
 }

@@ -18,10 +18,10 @@ export default {
         if (store.credentials.bookmarks.includes(recipe._id)) return
         let tmp = store.credentials
         tmp.bookmarks.push(recipe._id)
-        await Service.patch("/users", tmp)
+        await Service.patch("/users/bookmarks", tmp)
         store.credentials = tmp
         myLocalBookmarkedRecipes.unshift(recipe)
-        localStorage.setItem('store', JSON.stringify(store))
+        localStorage.setItem("store", JSON.stringify(store))
     },
 
     async delete(recipe) {
@@ -31,13 +31,13 @@ export default {
             if (recipe._id == e) return tmp.bookmarks.splice(i, 1)
             i++
         })
-        await Service.patch("/users", tmp)
+        await Service.patch("/users/bookmarks", tmp)
         store.credentials = tmp
         i = 0
         myLocalBookmarkedRecipes.forEach(e => {
             if (recipe._id == e._id) return myLocalBookmarkedRecipes.splice(i, 1)
             i++
         })
-        localStorage.setItem('store', JSON.stringify(store))
+        localStorage.setItem("store", JSON.stringify(store))
     }
 }
